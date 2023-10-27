@@ -1,0 +1,118 @@
+<html>
+<head>
+	<title>Local Storage</title>
+	<link rel = "stylesheet" href = "lab1.css">
+ <script type="text/javascript">
+ const localStorage = window.localStorage;
+ const initialize = () => {
+ if (localStorage) {
+ const count = localStorage.getItem("visitCount") || 0;
+ const newCount = parseInt(count) + 1;
+ localStorage.setItem("visitCount", newCount);
+ updateDOM();
+ }
+ };
+ const showAllStoredKeyValues = () => {
+ console.log(`we have ${localStorage.length} values`);
+ const ul = document.getElementById("storedItems");
+ ul.innerHTML = "";
+ for (let index = 0; index < localStorage.length; index++) {
+ const key = localStorage.key(index);
+ var li = document.createElement("li");
+ li.appendChild(
+ document.createTextNode(`${key} = ${localStorage.getItem(key)}`)
+ );
+ ul.appendChild(li);
+ }
+ };
+
+
+ const updateDOM = () => {
+ const count = localStorage.getItem("visitCount") || 0;
+ const storedPreferences = localStorage.getItem("preference");
+ const preference = storedPreferences
+ ? JSON.parse(storedPreferences)
+ : {};
+
+ document.getElementById(
+ "visitCount"
+ ).innerHTML = `Visit count ${count}`;
+ document.body.style.background = preference.color || "white";
+ showAllStoredKeyValues ();
+ };
+ const setColorPreference = color => {
+ const localStorage = window.localStorage;
+ const preference = { color }
+ localStorage.setItem("preference", JSON.stringify(preference));
+ updateDOM();
+ };
+ const removeCount = () => {
+ localStorage.removeItem("visitCount");
+ updateDOM();
+};
+const clearAll = () => {
+ localStorage.clear();
+ updateDOM();
+};
+
+ </script>
+</head>
+<body onload="initialize()">
+	
+	<div id = "container">
+	<div id = 'passport'>
+
+		<img id="pic" src= "unnamed.jpg" alt="passport" height=130px width=130px>
+	</div>
+		<div id = "buttons">
+			 <ui id="storedItems"></ui>
+		 <button id="bt" type="button" onclick="setColorPreference('red')">Red</button>
+ <button id="bt" type="button"
+onclick="setColorPreference('green')">Green</button>
+ <button id = "bt" type="button"
+onclick="setColorPreference('blue')">Blue</button>
+<div id="visitCount"></div>
+<div id = "bt3">
+<button id= "bt2" type="button" onclick="removeCount()">Remove count</button>
+ <button id = "bt2" type="button" onclick="clearAll()">Clear all</button>
+ </div>
+
+</div>
+<div id = "details">
+	<table>
+		<tr>
+			<th> Name : </th>
+			<td> KIERU GITAU</td>
+		</tr>
+		<tr>
+			<th>Reg No : </th>
+			<td> Sct221-0520/2021</td>
+		</tr>
+		<tr>
+			<th>College</th>
+			<td>COPAS</td>
+		<tr>
+			<th> School : </th>
+			<td> SCIT </td>
+		</tr>
+		<tr> 
+			<th>Year</th>
+			<td> 2023/2024</td>
+		</tr>
+		<tr>
+			<th> Semester </th>
+			<td> 3.1 </td>
+		</tr>
+		<tr>
+			<th> Unit Name : </th>
+			<td> Web Application Development II </td>
+
+		</tr>
+	</table>
+
+</div>
+		
+	</div>
+</div>
+</body>
+</html>
